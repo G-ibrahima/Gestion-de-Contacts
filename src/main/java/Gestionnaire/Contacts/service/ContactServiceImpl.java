@@ -1,5 +1,6 @@
 package Gestionnaire.Contacts.service;
 
+import Gestionnaire.Contacts.exeption.ContactException;
 import Gestionnaire.Contacts.model.ContactModel;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,9 @@ public class ContactServiceImpl implements ContactService {
                 c.setEmail(contact.getEmail());
                 c.setPhone(contact.getPhone());
             }
+            return contact;
         }
-        return contact;
+       throw new ContactException("Contact non trouve");
     }
 
     @Override
