@@ -31,19 +31,22 @@ public class ContactServiceImpl implements ContactService {
    public ContactModel updateContact(Long id,ContactModel contact){
 
         for (ContactModel c : contacts){
-            if (c.getId().equals(id)){
+            if (c.getId().equals(id)) {
                 c.setFirstName(contact.getFirstName());
                 c.setLastName(contact.getLastName());
                 c.setEmail(contact.getEmail());
                 c.setPhone(contact.getPhone());
+                return contact;
             }
-            return contact;
         }
-       throw new ContactException("Contact non trouve");
+       throw new ContactException("Contact non trouve !");
     }
 
     @Override
    public void deleteContact(Long id){
-        contacts.removeIf(c -> c.getId().equals(id));
+        boolean removed = contacts.removeIf(c -> c.getId().equals(id));
+        if (!removed) {
+            throw new ContactException("Contact non trouve !");
+        }
     }
 }
