@@ -38,11 +38,11 @@ public class ContactControllerTest {
     // Test 2 — POST /contacts
     @Test
     void addContact_devraitRetourner201() throws Exception {
-        // ✅ Request pour envoyer, Response pour recevoir
+        // Request pour envoyer, Response pour recevoir
         ContactDTO.Request request = new ContactDTO.Request("Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000");
         ContactDTO.Response response = new ContactDTO.Response(1L, "Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000");
 
-        when(contactService.addContact(any(ContactDTO.Request.class))).thenReturn(response); // ✅
+        when(contactService.addContact(any(ContactDTO.Request.class))).thenReturn(response); //
 
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class ContactControllerTest {
     // Test 4 — POST avec champs vides
     @Test
     void addContact_avecChampsVides_devraitRetourner400() throws Exception {
-        ContactDTO.Request contactInvalide = new ContactDTO.Request("", "", "", ""); // ✅ Request pas Response
+        ContactDTO.Request contactInvalide = new ContactDTO.Request("", "", "", ""); // Request pas Response
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(contactInvalide)))

@@ -18,20 +18,20 @@ public class ContactServiceImplTest {
 
     @Test
     void getAllContacts_devraitRetournerListeVide() {
-        List<ContactDTO.Response> contacts = service.getAllContacts(); // ✅
+        List<ContactDTO.Response> contacts = service.getAllContacts(); //
         assertNotNull(contacts);
         assertEquals(0, contacts.size());
     }
 
     @Test
     void addContact_devraitAjouterUnContact() {
-        // Arrange — ✅ Request au lieu de ContactModel
+        // Arrange — Request au lieu de ContactModel
         ContactDTO.Request request = new ContactDTO.Request(
                 "Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000"
         );
 
         // Act
-        ContactDTO.Response response = service.addContact(request); // ✅
+        ContactDTO.Response response = service.addContact(request); //
 
         // Assert
         assertNotNull(response.getId());
