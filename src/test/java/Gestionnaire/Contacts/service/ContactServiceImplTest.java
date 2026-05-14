@@ -4,8 +4,9 @@ import Gestionnaire.Contacts.exeption.ContactException;
 import Gestionnaire.Contacts.DTO.ContactDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class ContactServiceImplTest {
@@ -18,25 +19,20 @@ public class ContactServiceImplTest {
 
     @Test
     void getAllContacts_devraitRetournerListeVide() {
-        List<ContactDTO.Response> contacts = service.getAllContacts(); //
+        Page<ContactDTO.Response> contacts = service.getAllContacts(PageRequest.of(0, 10));
         assertNotNull(contacts);
-        assertEquals(0, contacts.size());
+        assertEquals(0, contacts.getTotalElements());
     }
 
     @Test
     void addContact_devraitAjouterUnContact() {
-        // Arrange — Request au lieu de ContactModel
         ContactDTO.Request request = new ContactDTO.Request(
                 "Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000"
         );
-
-        // Act
-        ContactDTO.Response response = service.addContact(request); //
-
-        // Assert
+        ContactDTO.Response response = service.addContact(request);
         assertNotNull(response.getId());
         assertEquals("Ibrahima", response.getFirstName());
-        assertEquals(1, service.getAllContacts().size());
+        assertEquals(1, service.getAllContacts(PageRequest.of(0, 10)).getTotalElements());
     }
 
     @Test
