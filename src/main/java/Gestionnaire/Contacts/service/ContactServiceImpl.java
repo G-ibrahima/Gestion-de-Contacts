@@ -1,5 +1,6 @@
 package Gestionnaire.Contacts.service;
 
+import Gestionnaire.Contacts.DTO.ContactDTO;
 import Gestionnaire.Contacts.exeption.ContactException;
 import Gestionnaire.Contacts.model.ContactModel;
 import org.springframework.stereotype.Service;
@@ -11,32 +12,34 @@ import java.util.List;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-   private List<ContactModel> contacts = new ArrayList<>();
+   private List<ContactDTO.Response> contacts = new ArrayList<>();
+
 
     @Override
-   public List<ContactModel> getAllContacts(){
+   public List<ContactDTO.Response> getAllContacts(){
         return contacts;
     }
 
 
     @Override
-   public ContactModel addContact(ContactModel contact){
-        contact.setId((long) contacts.size() + 1);
-        contacts.add(contact);
-        return contact;
+   public ContactDTO.Response addContact(ContactDTO.Request contact){
+        ContactModel model = ContactDTO.toModel(contact);
+        model.setId((long) contacts.size() + 1);
+        ContactDTO.Response responseDTO = ContactDTO.toResponse(model);
+        contacts.add(responseDTO);
+        return responseDTO;
     }
 
-
     @Override
-   public ContactModel updateContact(Long id,ContactModel contact){
+   public ContactDTO.Response updateContact(Long id,ContactDTO.Request contact){
 
-        for (ContactModel c : contacts){
+        for (ContactDTO.Response c : contacts){
             if (c.getId().equals(id)) {
                 c.setFirstName(contact.getFirstName());
                 c.setLastName(contact.getLastName());
                 c.setEmail(contact.getEmail());
                 c.setPhone(contact.getPhone());
-                return contact;
+                return c;
             }
         }
        throw new ContactException("Contact non trouve !");

@@ -1,6 +1,6 @@
 package Gestionnaire.Contacts.controller;
 
-import Gestionnaire.Contacts.model.ContactModel;
+import Gestionnaire.Contacts.DTO.ContactDTO;
 import Gestionnaire.Contacts.service.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,19 +19,19 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactModel> getContactId() {
+    public List<ContactDTO.Response> getContactId() {
         return contactService.getAllContacts();
     }
 
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ContactModel addContact(@Valid @RequestBody ContactModel contact) {
+    public ContactDTO.Response addContact(@Valid @RequestBody ContactDTO.Request contact) {
         return contactService.addContact(contact);
     }
 
     @PutMapping("{id}")
-    public ContactModel updateContact(@PathVariable Long id,@Valid @RequestBody ContactModel contact) {
+    public ContactDTO.Response updateContact(@PathVariable Long id,@Valid @RequestBody ContactDTO.Request contact) {
         return contactService.updateContact(id,contact);
     }
 
