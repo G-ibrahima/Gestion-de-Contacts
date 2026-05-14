@@ -3,6 +3,8 @@ package Gestionnaire.Contacts.controller;
 import Gestionnaire.Contacts.DTO.ContactDTO;
 import Gestionnaire.Contacts.service.ContactService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,8 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactDTO.Response> getContactId() {
-        return contactService.getAllContacts();
+    public Page<ContactDTO.Response> getContactId(Pageable pageable) {
+        return contactService.getAllContacts(pageable);
     }
 
 

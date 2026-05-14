@@ -3,6 +3,9 @@ package Gestionnaire.Contacts.service;
 import Gestionnaire.Contacts.DTO.ContactDTO;
 import Gestionnaire.Contacts.exeption.ContactException;
 import Gestionnaire.Contacts.model.ContactModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +19,11 @@ public class ContactServiceImpl implements ContactService {
 
 
     @Override
-   public List<ContactDTO.Response> getAllContacts(){
-        return contacts;
+    public Page<ContactDTO.Response> getAllContacts(Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), contacts.size());
+        List<ContactDTO.Response> pageContent = contacts.subList(start, end);
+        return new PageImpl<>(pageContent, pageable, contacts.size());
     }
 
 
