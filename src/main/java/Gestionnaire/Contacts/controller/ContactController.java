@@ -3,6 +3,7 @@ package Gestionnaire.Contacts.controller;
 import Gestionnaire.Contacts.model.ContactModel;
 import Gestionnaire.Contacts.service.ContactService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ContactController {
 
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ContactModel addContact(@Valid @RequestBody ContactModel contact) {
         return contactService.addContact(contact);
     }
@@ -34,6 +36,7 @@ public class ContactController {
     }
 
     @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContact(@PathVariable Long id) {
         contactService.deleteContact(id);
     }

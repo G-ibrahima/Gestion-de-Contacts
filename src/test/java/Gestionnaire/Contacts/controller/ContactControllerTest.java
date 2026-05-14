@@ -44,7 +44,7 @@ public class ContactControllerTest {
 
     //Test 2 — POST /contacts
     @Test
-    void addContact_devraitRetourner200() throws Exception {
+    void addContact_devraitRetourner201() throws Exception {
         // Arrange
         ContactModel contact = new ContactModel(null, "Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000");
         ContactModel contactSauvegarde = new ContactModel(1L, "Ibrahima", "Gueye", "ibrahima@gmail.com", "514-000-0000");
@@ -54,7 +54,7 @@ public class ContactControllerTest {
         mockMvc.perform(post("/contacts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(contact)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.firstName").value("Ibrahima"));
     }
@@ -62,9 +62,9 @@ public class ContactControllerTest {
 
     //Test 3 — DELETE /contacts/{id}
     @Test
-    void deleteContact_devraitRetourner200() throws Exception {
+    void deleteContact_devraitRetourner204() throws Exception {
         mockMvc.perform(delete("/contacts/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
 
